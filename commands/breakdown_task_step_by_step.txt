@@ -1,0 +1,37 @@
+# ==============================================================================
+# KOMUT: Bir Görevi Adım Adım Parçala
+# AMAÇ: Verilen tek bir karmaşık görevi, bir geliştiricinin takip edebileceği
+#       uygulanabilir alt adımlara bölmek.
+# ==============================================================================
+
+# ŞABLON (PROMPT TEMPLATE)
+# Görevin adım adım nasıl bölüneceğini gösteren ana şablon.
+PROMPT_TEMPLATE: "prompts/breakdown_task_step_by_step.tpl"
+
+# DEĞİŞKEN (VARIABLE)
+# Bu komut çalıştırılırken dışarıdan sağlanması gereken, parçalanacak görevin tanımı.
+# Örnek: TASK_TO_BREAKDOWN="Kullanıcılar için iki faktörlü kimlik doğrulama (2FA) sistemi ekle"
+TASK_TO_BREAKDOWN: "${TASK_DESCRIPTION}"
+
+# BAĞLAM (CONTEXT)
+# Görevi doğru bir şekilde parçalamak için gerekli teknik bağlam.
+CONTEXT_FILES: [
+  "context/technical_specifications.md",
+  "context/database_schema.md",
+  "context/development_rules.md"
+]
+
+# ÇIKTI (OUTPUT)
+# Oluşturulan adımların kaydedileceği dosya. Dosya adı, göreve göre dinamik olarak oluşturulur.
+OUTPUT_FILE: "output/task_breakdown_${TASK_TO_BREAKDOWN | slugify}.md"
+
+# TALİMAT (INSTRUCTION)
+# SENARYO: 10+ yıl deneyimli bir Kıdemli Laravel Geliştiricisi olarak hareket et.
+# GÖREV: `CONTEXT_FILES`'daki teknik gereksinimleri ve kuralları göz önünde bulundurarak, `TASK_TO_BREAKDOWN` ile belirtilen görevi adım adım tamamlanacak şekilde detaylı alt görevlere ayır.
+# GEREKSİNİMLER:
+# 1.  Her adımın net bir başlığı ve açıklaması olmalı.
+# 2.  Gerekli Artisan komutlarını belirt (örn: `php artisan make:migration`, `php artisan make:controller`).
+# 3.  Hangi dosyaların (Model, View, Controller, Route, Service, Test vb.) oluşturulacağını veya düzenleneceğini listele.
+# 4.  Örnek kod blokları ile adımları somutlaştır. Özellikle iş mantığının karmaşık olduğu yerlerde.
+# 5.  Dikkat edilmesi gereken güvenlik veya performans notlarını özellikle vurgula.
+# 6.  Sonucu `OUTPUT_FILE`'a Markdown formatında yaz.

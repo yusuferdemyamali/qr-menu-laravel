@@ -1,0 +1,42 @@
+# ==============================================================================
+# KOMUT: Proje Görev Listesi Oluştur
+# AMAÇ: Context klasöründeki tüm proje belgelerini analiz ederek ayrıntılı,
+#       kategorize edilmiş ve önceliklendirilmiş bir görev listesi oluşturmak.
+# ==============================================================================
+
+# ŞABLON (PROMPT TEMPLATE)
+# Görev listesinin nasıl yapılandırılacağını belirleyen ana şablon.
+PROMPT_TEMPLATE: "prompts/generate_tasklist.tpl"
+
+# BAĞLAM (CONTEXT)
+# Görev listesi oluşturulurken referans alınacak tüm proje belgeleri.
+# Glob deseni (*) ile context klasöründeki tüm .md ve .txt dosyaları dahil edilir.
+CONTEXT_FILES: [
+  "context/project_brief.md",
+  "context/client_requirements.md",
+  "context/technical_specifications.md",
+  "context/design_mockups_description.md",
+  "context/development_rules.md"
+]
+
+# ÇIKTI (OUTPUT)
+# Oluşturulan görev listesinin kaydedileceği dosya.
+# Tarih damgası ile her çalıştırmada özgün bir dosya oluşturulur.
+OUTPUT_FILE: "output/generated_tasks_$(date +%Y-%m-%d).md"
+
+# TALİMAT (INSTRUCTION)
+# SENARYO: Deneyimli bir Proje Yöneticisi ve Kıdemli Laravel Geliştiricisi olarak hareket et.
+# GÖREV: `CONTEXT_FILES` ile belirtilen tüm belgeleri derinlemesine oku ve analiz et. `PROMPT_TEMPLATE` şablonunu bir yapı iskeleti olarak kullanarak, projenin başlangıcından canlıya alınmasına kadar tamamlanması gereken tüm teknik, idari ve tasarımsal görevleri içeren kapsamlı bir liste oluştur.
+# GEREKSİNİMLER:
+# 1.  Görevleri şu ana kategorilere ayır:
+#     - Proje Kurulumu ve Yapılandırma
+#     - Veritabanı Tasarımı ve Mimarisi
+#     - Kullanıcı Kimlik Doğrulama ve Yetkilendirme (Auth & Roles/Permissions)
+#     - Ön Yüz (Frontend) Geliştirmeleri (Blade, Livewire/Vue/React)
+#     - Arka Yüz (Backend) API ve İş Mantığı
+#     - Üçüncü Parti Servis Entegrasyonları (Ödeme, E-posta vb.)
+#     - Testler (Birim, Özellik, Entegrasyon)
+#     - Dağıtım (Deployment) ve DevOps
+#     - Proje Yönetimi ve Dokümantasyon
+# 2.  Her görev için bir başlık, kısa bir açıklama, öncelik (Düşük, Orta, Yüksek, Kritik) ve tahmini zorluk (1-5 arası) belirt.
+# 3.  Çıktıyı, `OUTPUT_FILE`'da belirtilen dosyaya, temiz ve okunabilir bir Markdown formatında yaz.

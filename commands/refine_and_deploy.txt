@@ -1,0 +1,52 @@
+# Command: Refine and Deploy
+
+## Purpose
+Bu komutun amacı mevcut proje dokümanlarını ve kod taslaklarını analiz edip:
+1. Eksikleri belirlemek
+2. İyileştirme önerileri üretmek
+3. Güvenlik ve performans açısından optimize etmek
+4. Deploy için net adımlar çıkarmaktır.
+
+## Context Files
+Aşağıdaki bağlam dosyalarını sırayla oku ve tüm bilgileri sentezle:
+- context/project_brief.md
+- context/client_requirements.md
+- context/technical_specifications.md
+- context/design_mockups_description.md
+- context/development_rules.md
+- context/security_best_practices_laravel.md
+- context/performance_goals.md
+- context/database_schema.md
+
+## Prompt Template
+Kullanılacak şablon:
+- prompts/refine_and_deploy.tpl
+
+## Variables
+Aşağıdaki değişkenler prompt şablonuna aktarılmalıdır:
+- ${project_brief}
+- ${client_requirements}
+- ${technical_specifications}
+- ${design_mockups_description}
+- ${development_rules}
+- ${security_best_practices_laravel}
+- ${performance_goals}
+- ${database_schema}
+
+## Output
+Sonuç dosyaları `output/` klasörüne kaydedilecektir:
+- output/refined_project_plan.md → Proje için optimize edilmiş plan
+- output/deployment_instructions.md → Deploy için adım adım talimatlar
+
+## Instructions
+1. Yukarıdaki context dosyalarını sırayla oku.
+2. Proje planını gözden geçir, eksikleri ve hataları belirle.
+3. İyileştirme önerilerini proje planına entegre et.
+4. Laravel güvenlik ve performans best practices doğrultusunda raporu güçlendir.
+5. Deploy aşamaları için net, uygulanabilir ve adım adım talimat çıkar. Deploy etmeden önce silmem, temizlemem gereken dosyaları listele.
+6. Sonuçları belirtilen output dosyalarına yaz.
+
+## Success Criteria
+- Plan net, anlaşılır ve uygulanabilir olmalı.
+- Kodlama ve güvenlik kurallarıyla uyumlu olmalı.
+- Deploy adımları, Laravel tabanlı projelerde doğrudan uygulanabilir düzeyde olmalı.

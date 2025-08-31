@@ -1,0 +1,86 @@
+# Command: Code Quality Audit
+# File: commands/code_quality_audit.txt
+
+## Purpose
+Mevcut Laravel projesinin kod kalitesini analiz etmek, PSR standartlarına ve projedeki geliştirme kurallarına uygunluğunu kontrol etmek ve refactor önerileri sunmak.
+
+---
+
+## Input
+- **Context files:**
+  - ${development_rules}          : Kodlama kuralları ve workflow standartları
+  - ${technical_specifications}   : Kullanılan teknolojiler ve framework konvansiyonları
+- **Existing code**                : app/, database/, routes/, config/ vb. klasörler
+
+---
+
+## Output
+- Kod kalitesi raporu
+  - PSR-1 / PSR-2 / PSR-12 standart uyumu
+  - SOLID prensiplerine uyum
+  - DRY, KISS ve YAGNI prensiplerine uyum
+  - Kod tekrarları ve refactor önerileri
+  - Kritik hatalar ve anti-pattern’ler
+  - Önerilen iyileştirmeler
+
+---
+
+## Instructions
+1. **Analyze Code Structure**
+   - Controller, Model, Service, Repository, Middleware ve Helper dosyalarını incele
+   - Dosya ve klasör isimlendirmelerinin standartlara uygunluğunu kontrol et
+   - Namespace ve kullanım kurallarını incele
+
+2. **Static Analysis**
+   - Kodun PSR standartlarına uygunluğunu denetle
+   - Karmaşık fonksiyon ve methodları tespit et
+   - Kod tekrarlarını ve duplicate logic’leri bul
+
+3. **SOLID / Design Principles Check**
+   - Sınıfların sorumlulukları tek mi (Single Responsibility)
+   - Dependency Injection ve Interface kullanımı doğru mu
+   - Open/Closed ve Liskov prensipleri ihlal edilmiş mi
+
+4. **Performance & Maintainability**
+   - Gereksiz query veya loop’lar
+   - Büyük method ve service class’ları
+   - Potansiyel bottleneck ve optimize edilebilir noktalar
+
+5. **Output Formatting**
+   - Bölüm 1: PSR ve kod standardı uyumu
+   - Bölüm 2: SOLID ve design pattern uyumu
+   - Bölüm 3: Refactor önerileri ve kritik hatalar
+   - Bölüm 4: Önerilen adımlar ve öncelikler
+
+---
+
+## Example Output
+
+**PSR Compliance**
+- UserController.php: PSR-12 uyumlu
+- OrderService.php: PSR-2 violation on line 45 (long method)
+
+**SOLID Principles**
+- ProductRepository.php violates Single Responsibility: handles DB + business logic
+- PaymentService.php: Suggest Interface extraction for Open/Closed compliance
+
+**Refactor Suggestions**
+- Split `OrderService.php` into smaller service classes
+- Move validation logic to FormRequest classes
+- Remove duplicate query in `CartController.php`
+
+**Critical Issues**
+- Hard-coded credentials in `.env.example`
+- Missing type hints in multiple service methods
+
+**Next Steps**
+- Apply refactor suggestions prioritizing critical files
+- Run static analysis tools (PHPStan / Laravel Pint) after refactor
+- Ensure all tests pass
+
+---
+
+## Notes
+- Şablon **her projeye uyarlanabilir**; sadece context ve mevcut kod değişecek
+- Output, kod review ve sprint planlamasında direkt kullanılabilir
+- AI veya static analysis araçları ile birlikte otomatikleştirilebilir

@@ -1,0 +1,95 @@
+# ==============================================================================
+# KOMUT: Bütünsel Kod Analizi ve Mentorluk Raporu Oluştur
+# AMAÇ: Sağlanan kodu Güvenlik, Performans ve Kod Kalitesi eksenlerinde analiz
+#       ederek, bir mentor bakış açısıyla pratik ve öğretici geri bildirimler sunmak.
+# ==============================================================================
+
+# ŞABLON (PROMPT TEMPLATE)
+# Görev listesinin nasıl yapılandırılacağını belirleyen ana şablon.
+PROMPT_TEMPLATE: "prompts/performance_security_report.tpl"
+
+# BAĞLAM (CONTEXT)
+# Analiz için referans alınacak kurallar, hedefler ve proje standartları.
+CONTEXT_FILES: [
+  "context/security_best_practices_laravel.md",
+  "context/performance_goals.md",
+  "context/development_rules.md",          # SOLID, DRY gibi prensipler ve kodlama standartları
+  "context/technical_specifications.md"
+]
+
+# ANALİZ EDİLECEK KOD (CODE TO ANALYZE)
+# Bu komut çalıştırılırken dışarıdan sağlanacak olan, analizi yapılacak kod bloğu,
+# dosya içeriği veya işlevsellik tanımı.
+# Örnek: CODE_INPUT="app/Http/Controllers/OrderController.php dosyasının içeriği"
+CODE_INPUT: "${CODE_SNIPPET_OR_FILE_PATH}"
+
+# ÇIKTI (OUTPUT)
+# Oluşturulan birleşik raporun kaydedileceği dosya.
+OUTPUT_FILE: "output/code_review_report_$(date +%Y-%m-%d_%H-%M).md"
+
+# TALİMAT (INSTRUCTION)
+# SENARYO: Kıdemli bir yazılım mimarı ve takım lideri (Tech Lead) rolünü üstlen. Amacın sadece hata bulmak değil, aynı zamanda kodu yazan geliştiriciye yol göstermek, en iyi pratikleri öğretmek ve kod kalitesini bütünsel olarak artırmaktır. Geri bildirimlerin yapıcı, net ve uygulanabilir olmalı.
+
+# GÖREV: `CONTEXT_FILES`'daki kuralları ve en iyi pratikleri bir rehber olarak kullanarak, `CODE_INPUT` ile sağlanan kodu A'dan Z'ye incele. Raporunu aşağıdaki değerlendirme çerçevesine ve raporlama formatına göre oluştur.
+
+# DEĞERLENDİRME ÇERÇEVESİ (ANALYSIS FRAMEWORK):
+# 1. Güvenlik Analizi:
+#    - SQL Injection (Eloquent/Query Builder kullanımı)
+#    - XSS (Blade'de `{{ }}` ve `e()` kullanımı)
+#    - CSRF (`@csrf` direktifinin varlığı)
+#    - Mass Assignment (`$fillable`/`$guarded` yapılandırması)
+#    - Yetkilendirme ve Kimlik Doğrulama (Middleware, Gate, Policy kullanımı)
+#    - Hassas Veri İfşası (API response'ları, log'lar)
+# 2. Performans Analizi:
+#    - N+1 Query Problemi (Eager Loading (`with()`) kontrolü)
+#    - Verimsiz Veritabanı Sorguları (İndeks kullanımı, gereksiz veri çekme)
+#    - Önbellekleme (Caching) Fırsatları (`Cache::remember` vb. kullanımı)
+#    - Verimsiz Döngüler ve Koleksiyon (Collection) Kullanımı
+#    - İş Kuyrukları (Queues) için Uygun Adaylar (Uzun süren senkron işlemler)
+# 3. Kod Kalitesi ve Sürdürülebilirlik Analizi:
+#    - Okunabilirlik (Değişken isimlendirme, yorum satırları, kod formatlama)
+#    - Tek Sorumluluk Prensibi (SRP - Controller'ların şişkinliği, iş mantığının Servis katmanına taşınması)
+#    - Tekrar Etmeme Prensibi (DRY - Kod tekrarlarının tespiti ve soyutlama önerileri)
+#    - Laravel Pratikleri (Route-Model Binding, Form Requests, API Resources gibi Laravel özelliklerinin etkin kullanımı)
+
+# RAPORLAMA FORMATI:
+# Çıktıyı aşağıdaki yapıda, Markdown formatında oluştur:
+
+# ------------------------------------------------------------------------------
+# ### Genel Değerlendirme ve Özet
+# Kodun genel durumu hakkında kısa bir özet sun. Güçlü yönlerini ve en çok geliştirilmesi gereken alanları belirt.
+#
+# ### Bulgular ve Mentor Önerileri
+# Her bir bulguyu aşağıdaki şablona göre listele. En kritik olanları en üste koy.
+#
+# ---
+#
+# **Bulgu Başlığı:** (Örn: N+1 Query Problemi Tespit Edildi)
+# **Önem Derecesi:** `Kritik` | `Yüksek` | `Orta` | `Düşük/Bilgilendirici`
+# **Kategori:** `Güvenlik` | `Performans` | `Kod Kalitesi`
+#
+# **Tespit Edilen Kod Bölümü:**
+# ```php
+# // İlgili kod bloğunu buraya ekle
+# ```
+#
+# **Açıklama ve Risk/Etki Analizi:**
+# > Sorunun ne olduğunu, neden önemli olduğunu ve düzeltilmezse ne gibi sonuçlar doğurabileceğini (örn: "Bu döngü, her ürün için ayrı bir veritabanı sorgusu yaparak sayfa yüklenme süresini katlanarak artırır.") açık ve basit bir dille anlat.
+#
+# **Mentor Önerisi ve Çözüm Yolu:**
+# > Bu sorunu çözmek için ne yapılması gerektiğini adım adım anlat. Düzeltilmiş kod örneğini sun. Bu pratiğin neden daha iyi olduğunu ve gelecekte benzer hatalardan nasıl kaçınılacağını öğretici bir dille açıkla.
+#
+# **Örnek Düzeltilmiş Kod:**
+# ```php
+# // Sorunu gideren, en iyi pratiklere uygun kod bloğunu buraya ekle
+# ```
+# ------------------------------------------------------------------------------
+
+# ÖNEM DERECESİ KRİTERLERİ:
+# - `Kritik`: Acil müdahale gerektiren, canlı sistemi doğrudan çökertebilecek veya büyük bir güvenlik zafiyetine yol açabilecek sorunlar.
+# - `Yüksek`: Sistemin kararlılığını, güvenliğini veya performansını ciddi şekilde etkileyen ancak anlık çökme riski taşımayan sorunlar.
+# - `Orta`: En iyi pratiklere uymayan, gelecekte teknik borca (technical debt) yol açabilecek veya performansı orta düzeyde etkileyen durumlar.
+# - `Düşük/Bilgilendirici`: Kodun okunabilirliğini veya bakımını kolaylaştıracak küçük optimizasyonlar veya stil önerileri.
+
+# SONUÇ:
+# Yukarıdaki talimatlara harfiyen uyarak, kapsamlı, öğretici ve profesyonel bir kod analiz raporu oluştur ve `OUTPUT_FILE`'a yaz.
